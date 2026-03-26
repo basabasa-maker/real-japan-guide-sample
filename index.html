@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sushi Yamamoto | Real Japan Guide</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* Header */
+    .site-header {
+      background: #1a1a2e;
+      color: white;
+      padding: 12px 16px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .site-header h1 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+    .site-header p {
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: #ccc;
+      margin-top: 2px;
+    }
+
+    /* Hero Image */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 280px;
+      overflow: hidden;
+    }
+    .hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .hero-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: rgba(220, 53, 69, 0.95);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .hero-rating {
+      position: absolute;
+      bottom: 16px;
+      right: 16px;
+      background: rgba(0,0,0,0.75);
+      color: #ffc107;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    /* Container */
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* Restaurant Title */
+    .restaurant-title {
+      background: white;
+      margin: -20px 16px 0;
+      padding: 20px;
+      border-radius: 12px;
+      position: relative;
+      z-index: 10;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .restaurant-title h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .restaurant-title .subtitle {
+      font-size: 14px;
+      color: #888;
+    }
+    .restaurant-title .genre-tag {
+      display: inline-block;
+      background: #e8f4f8;
+      color: #0077b6;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      margin-top: 8px;
+      font-weight: 500;
+    }
+
+    /* Section Card */
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 16px auto;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      max-width: 600px;
+    }
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e0e0e0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-title .icon {
+      font-size: 18px;
+    }
+
+    /* Info Grid */
+    .info-row {
+      display: flex;
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 14px;
+    }
+    .info-row:last-child { border-bottom: none; }
+    .info-label {
+      width: 100px;
+      flex-shrink: 0;
+      color: #888;
+      font-weight: 500;
+    }
+    .info-value {
+      flex: 1;
+    }
+
+    /* Menu Items */
+    .menu-item {
+      padding: 14px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .menu-item:last-child { border-bottom: none; }
+    .menu-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+    .menu-name {
+      font-weight: 600;
+      font-size: 15px;
+    }
+    .menu-name-jp {
+      font-size: 12px;
+      color: #888;
+    }
+    .menu-price {
+      font-weight: 700;
+      color: #dc3545;
+      font-size: 15px;
+    }
+    .menu-desc {
+      font-size: 13px;
+      color: #666;
+      margin-top: 2px;
+    }
+
+    /* Photo Gallery */
+    .gallery {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .gallery img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .gallery img:first-child {
+      grid-column: 1 / -1;
+      height: 200px;
+    }
+
+    /* Tags */
+    .tag-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .tag-yes {
+      background: #d4edda;
+      color: #155724;
+    }
+    .tag-no {
+      background: #f8d7da;
+      color: #721c24;
+    }
+    .tag-partial {
+      background: #fff3cd;
+      color: #856404;
+    }
+    .tag-info {
+      background: #e8f4f8;
+      color: #0077b6;
+    }
+
+    /* Map Placeholder */
+    .map-container {
+      width: 100%;
+      height: 200px;
+      background: #e0e0e0;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      font-size: 14px;
+      margin-top: 12px;
+      overflow: hidden;
+    }
+    .map-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* CTA Button */
+    .cta-button {
+      display: block;
+      background: #dc3545;
+      color: white;
+      text-align: center;
+      padding: 14px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 16px;
+      margin-top: 12px;
+      transition: background 0.2s;
+    }
+    .cta-button:hover { background: #c82333; }
+    .cta-sub {
+      display: block;
+      text-align: center;
+      padding: 12px;
+      border: 2px solid #0077b6;
+      color: #0077b6;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      margin-top: 8px;
+    }
+
+    /* Manner Note */
+    .manner-note {
+      background: #fff9e6;
+      border-left: 4px solid #ffc107;
+      padding: 14px 16px;
+      border-radius: 0 8px 8px 0;
+      margin-top: 12px;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    .manner-note strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    /* Instagram Embed */
+    .instagram-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      background: linear-gradient(135deg, #f9ce34, #ee2a7b, #6228d7);
+      border-radius: 10px;
+      text-decoration: none;
+      color: white;
+      margin-top: 12px;
+    }
+    .instagram-link .ig-icon {
+      font-size: 28px;
+    }
+    .instagram-link .ig-text {
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .instagram-link .ig-handle {
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    /* Footer */
+    .site-footer {
+      text-align: center;
+      padding: 30px 16px;
+      color: #888;
+      font-size: 12px;
+      margin-top: 20px;
+    }
+    .site-footer a {
+      color: #0077b6;
+      text-decoration: none;
+    }
+
+    /* PR Badge */
+    .pr-quote {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 12px;
+      font-style: italic;
+      font-size: 14px;
+      color: #555;
+      position: relative;
+    }
+    .pr-quote::before {
+      content: '"';
+      font-size: 40px;
+      color: #ddd;
+      position: absolute;
+      top: 4px;
+      left: 10px;
+      font-family: Georgia, serif;
+    }
+    .pr-quote p {
+      margin-left: 24px;
+    }
+
+    /* Sample Banner */
+    .sample-banner {
+      background: #dc3545;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sample Notice -->
+  <div class="sample-banner">
+    This is a SAMPLE page — Actual listings will appear on the Real Japan Guide website
+  </div>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <h1>REAL JAPAN GUIDE</h1>
+    <p>YOUR LOCAL TRAVEL COMPANION</p>
+  </header>
+
+  <!-- Hero Image -->
+  <div class="hero">
+    <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=800&q=80"
+         alt="Sushi counter with fresh nigiri">
+    <span class="hero-badge">Sushi</span>
+    <span class="hero-rating">★★★★★ 5.0</span>
+  </div>
+
+  <!-- Restaurant Title Card -->
+  <div class="restaurant-title">
+    <h2>Sushi Yamamoto</h2>
+    <div class="subtitle">鮨やまもと — Asakusa, Tokyo</div>
+    <span class="genre-tag">Sushi / Japanese</span>
+  </div>
+
+  <div class="container">
+
+    <!-- About -->
+    <div class="card">
+      <div class="card-title">
+        <span class="icon">🍽</span> About This Restaurant
+      </div>
+      <p style="font-size:14px; color:#555;">
+        A traditional sushi restaurant run by a third-generation sushi chef in the heart of Asakusa.
+        Using fresh fish sourced daily from Toyosu Market, each piece of sushi is carefully crafted
+        with seasonal ingredients. The intimate counter seating allows you to watch the chef prepare
+        your meal right before your eyes.
+      </p>
+      <div class="pr-quote">
+        <p>"We welcome visitors from all over the world.
+        Please enjoy authentic Edomae sushi in a relaxed atmosphere.
+        Don't hesitate to ask us for recommendations!"</p>
+      </div>
+    </div>
+
+    <!-- Photo Gallery -->
+    <div class="card">
+      <div class="card-title">
+        <span class="icon">📸</span> Photos
+      </div>
+      <div class="gallery">
+        <img src="https://images.unsplash.com/photo-1553621042-f6e147245754?w=800&q=80" alt="Sushi platter">
+        <img src="https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?w=600&q=80" alt="Nigiri sushi">
+        <img src="https://images.unsplash.com/photo-1582450871972-ab5ca641643d?w=600&q=80" alt="Restaurant interior">
+      </div>
+
+      <!-- Instagram Link -->
+      <a href="#" class="instagram-link">
+        <span class="ig-icon">&#9741;</span>
+        <div>
+          <div class="ig-text">Follow on Instagram</div>
+          <div class="ig-handle">@sushi_yamamoto_asakusa</div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Recommended Menu -->
+    <div class="card">
+      <div class="card-title">
+        <span class="icon">📋</span> Recommended Menu
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-header">
+          <div>
+            <div class="menu-name">Omakase Course</div>
+            <div class="menu-name-jp">おまかせコース</div>
+          </div>
+          <div class="menu-price">&yen;8,000</div>
+        </div>
+        <div class="menu-desc">Chef's selection of 10 pieces of seasonal nigiri sushi with miso soup</div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-header">
+          <div>
+            <div class="menu-name">Chirashi Don</div>
+            <div class="menu-name-jp">ちらし丼</div>
+          </div>
+          <div class="menu-price">&yen;3,500</div>
+        </div>
+        <div class="menu-desc">Assorted sashimi over sushi rice &mdash; perfect for lunch</div>
+      </div>
+      <div class="menu-item">
+        <div class="menu-item-header">
+          <div>
+            <div class="menu-name">Toro Sashimi</div>
+            <div class="menu-name-jp">トロ刺身</div>
+          </div>
+          <div class="menu-price">&yen;2,500</div>
+        </div>
+        <div class="menu-desc">Premium fatty tuna &mdash; a melt-in-your-mouth experience</div>
+      </div>
+
+      <div style="text-align:center; margin-top:14px; font-size:13px; color:#888;">
+        Price range: &yen;5,000 &ndash; &yen;10,000 per person
+      </div>
+    </div>
+
+    <!-- Visitor Information -->
+    <div class="card">
+      <div class="card-title">
+        <span class="icon">&#8505;</span> Visitor Information
+      </div>
+      <div class="info-row">
+        <div class="info-label">Address</div>
+        <div class="info-value">1-2-3 Asakusa, Taito-ku, Tokyo 111-0032</div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Station</div>
+        <div class="info-value">Asakusa Station (Ginza Line) &mdash; 5 min walk</div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Hours</div>
+        <div class="info-value">Lunch 11:30&ndash;14:00<br>Dinner 17:00&ndash;22:00 (L.O. 21:30)</div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Closed</div>
+        <div class="info-value">Every Monday</div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Seats</div>
+        <div class="info-value">18 seats (12 counter + 1 private room)</div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Private Room</div>
+        <div class="info-value">Available (up to 6 guests, reservation required)</div>
+      </div>
+      <div class="info-row">
+        <div class="info-label">Phone</div>
+        <div class="info-value">03-1234-5678</div>
+      </div>
+
+      <!-- Map -->
+      <div class="map-container">
+        <img src="https://maps.googleapis.com/maps/api/staticmap?center=Asakusa,Tokyo&zoom=15&size=600x200&maptype=roadmap&language=en"
+             alt="Map"
+             onerror="this.parentElement.innerHTML='<div style=\'padding:20px;text-align:center\'>📍 Google Maps<br><small>Tap to open in Maps app</small></div>'">
+      </div>
+    </div>
+
+    <!-- Foreign Visitor Friendly -->
+    <div class="card">
+      <div class="card-title">
+        <span class="icon">&#127758;</span> Foreign Visitor Friendly
+      </div>
+      <div class="tag-grid">
+        <span class="tag tag-yes">&#10003; English Menu</span>
+        <span class="tag tag-yes">&#10003; Credit Card</span>
+        <span class="tag tag-yes">&#10003; IC Card (Suica)</span>
+        <span class="tag tag-yes">&#10003; Kids Welcome</span>
+        <span class="tag tag-yes">&#10003; Allergy Support</span>
+        <span class="tag tag-partial">&#9888; Vegetarian (on request)</span>
+        <span class="tag tag-no">&#10007; Halal</span>
+        <span class="tag tag-no">&#10007; QR Payment</span>
+      </div>
+
+      <div style="margin-top: 16px;">
+        <div class="info-row">
+          <div class="info-label">Payment</div>
+          <div class="info-value">Cash, Visa, Mastercard, AMEX, Suica, Pasmo</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Languages</div>
+          <div class="info-value">Japanese, English (basic)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reservation -->
+    <div class="card">
+      <div class="card-title">
+        <span class="icon">&#128197;</span> Reservation
+      </div>
+      <p style="font-size:14px; color:#555; margin-bottom:12px;">
+        Reservations are recommended, especially for dinner and private room. Walk-ins are welcome for lunch when seats are available.
+      </p>
+      <a href="#" class="cta-button">Reserve Now</a>
+      <a href="#" class="cta-sub">&#128222; Call: 03-1234-5678</a>
+
+      <!-- Manner Note -->
+      <div class="manner-note">
+        <strong>&#128221; A Note on Japanese Dining Etiquette</strong>
+        In Japan, restaurant reservations are taken very seriously.
+        If you make a reservation, please be sure to show up on time.
+        If your plans change, please cancel as early as possible &mdash;
+        no-shows cause significant problems for small restaurants. Thank you for your understanding.
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <p style="font-size:16px; font-weight:700; color:#1a1a2e; margin-bottom:8px;">REAL JAPAN GUIDE</p>
+      <p>Discover authentic Japan through local eyes.</p>
+      <p style="margin-top:12px;">
+        <a href="#">About Us</a> &middot;
+        <a href="#">All Restaurants</a> &middot;
+        <a href="#">Travel Tips</a> &middot;
+        <a href="#">Contact</a>
+      </p>
+      <p style="margin-top:16px;">&copy; 2026 Real Japan Guide. All rights reserved.</p>
+    </footer>
+
+  </div>
+
+</body>
+</html>
